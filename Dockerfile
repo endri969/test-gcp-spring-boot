@@ -1,5 +1,5 @@
 FROM adoptopenjdk:11-jre-hotspot
 
-COPY target/helloworld.jar /helloworld.jar
+COPY target/demo-0.0.1-SNAPSHOT.jar /demo-0.0.1-SNAPSHOT.jar
 
-ENTRYPOINT java -jar helloworld.jar
+ENTRYPOINT java -jar demo-0.0.1-SNAPSHOT.jar
