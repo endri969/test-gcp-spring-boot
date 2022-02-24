@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
 
-@SpringBootApplication
+@SpringBootApplication(scanBasePackages = "com.example.demo")
 public class DemoApplication {
 
 	public static void main(String[] args) {
@@ -49,5 +49,4 @@ class HelloController {
     String hello() {
         return "Hello World!";
     }
-
 }
