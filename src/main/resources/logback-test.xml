@@ -18,6 +18,12 @@
 <!--        <enhancer>com.example.logging.logback.enhancers.ExampleEnhancer</enhancer>-->
     </appender>
 
+    <appender name="CLOUD_PERF" class="com.google.cloud.logging.logback.LoggingAppender">
+
+        <log>application.perf.log</log> <!-- Optional : default java.log -->
+        <!--        <enhancer>com.example.logging.logback.enhancers.ExampleEnhancer</enhancer>-->
+    </appender>
+
     <root level="info">
         <appender-ref ref="CLOUD" />
     </root>
