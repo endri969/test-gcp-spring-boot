@@ -41,7 +41,11 @@
         <appender-ref ref="CLOUD" />
     </logger>
 
-    <root level="INFO">
+    <logger name="com.example.demo" level="INFO" additivity="false">
+        <appender-ref ref="CLOUD" />
+    </logger>
+
+    <root level="WARN">
         <appender-ref ref="CLOUD" />
     </root>
 </configuration>
