@@ -24,8 +24,24 @@
         <!--        <enhancer>com.example.logging.logback.enhancers.ExampleEnhancer</enhancer>-->
     </appender>
 
-    <root level="info">
-        <appender-ref ref="CLOUD" />
+    <logger name="performance" level="INFO" additivity="false">
         <appender-ref ref="CLOUD_PERF" />
+    </logger>
+
+    <logger name="org.springframework.boot.SpringApplication" level="INFO" additivity="false">
+        <appender-ref ref="CLOUD" />
+    </logger>
+
+
+    <logger name="org.springframework.boot.web.servlet.ServletContextInitializerBeans" level="DEBUG" additivity="false">
+        <appender-ref ref="CLOUD" />
+    </logger>
+
+    <logger name="org.springframework.web.servlet.handler" level="INFO" additivity="false">
+        <appender-ref ref="CLOUD" />
+    </logger>
+
+    <root level="WARN">
+        <appender-ref ref="CLOUD" />
     </root>
 </configuration>
