@@ -12,6 +12,8 @@
 -->
 <!-- [START logging_logback_config] -->
 <configuration>
+    <springProperty scope="context" name="log_level" source="logging.module-level" />
+
     <appender name="CLOUD" class="com.google.cloud.logging.logback.LoggingAppender">
 
         <log>application.module.log</log> <!-- Optional : default java.log -->
@@ -41,7 +43,7 @@
         <appender-ref ref="CLOUD" />
     </logger>
 
-    <logger name="com.example.demo" level="INFO" additivity="false">
+    <logger name="com.example.demo" level="${log_level}" additivity="false">
         <appender-ref ref="CLOUD" />
     </logger>
 
