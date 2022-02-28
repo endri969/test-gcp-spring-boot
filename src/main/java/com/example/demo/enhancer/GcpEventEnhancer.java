@@ -21,7 +21,12 @@ public class GcpEventEnhancer implements LoggingEventEnhancer {
     @Override
     public void enhanceLogEntry(LogEntry.Builder builder, ILoggingEvent iLoggingEvent) {
         ObjectMapper objectMapper = new Jackson2ObjectMapperBuilder().build();
-        ObjectNode jsonNodes = buildJsonObject(iLoggingEvent, objectMapper);
+        ObjectNode jsonNodes = null;
+        try {
+            jsonNodes = buildJsonObject(iLoggingEvent, objectMapper);
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+        }
         Payload.JsonPayload jsonPayload = Payload.JsonPayload.of(objectMapper.convertValue(jsonNodes, new TypeReference<Map<String, Object>>() {
         }));
 
