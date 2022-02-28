@@ -42,7 +42,6 @@ public class HelloController {
 
         logger.info(MarkerFactory.getMarker("JSON_PAYLOAD"),mapper.writeValueAsString(sample));
 
-        perfLogger.info("From performance logger");
         perfLogger.info(mapper.writeValueAsString(sample));
 
         return sample;

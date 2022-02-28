@@ -27,7 +27,7 @@ public class GcpPerfEnhancer implements LoggingEventEnhancer {
             builder.setPayload(jsonPayload);
 
         } catch (JsonProcessingException e) {
-            e.printStackTrace();
+            //Do nothing
         }
 
 
