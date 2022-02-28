@@ -37,7 +37,7 @@ public class GcpEventEnhancer implements LoggingEventEnhancer {
         }
     }
 
-    private ObjectNode buildJsonObject(ILoggingEvent event, ObjectMapper mapper) {
+    private ObjectNode buildJsonObject(ILoggingEvent event, ObjectMapper mapper) throws JsonProcessingException {
 
         ObjectNode json = mapper.createObjectNode();
         json.put("createDateTime", LocalDateTime.ofInstant(Instant.ofEpochMilli(event.getTimeStamp()), ZoneId.systemDefault()).toString());
@@ -47,6 +47,7 @@ public class GcpEventEnhancer implements LoggingEventEnhancer {
         Marker marker = event.getMarker();
         json.put("marker", marker.getName());
 
+        json.set("msgObject", mapper.readValue(event.getFormattedMessage(), ObjectNode.class));
 
         return json;
     }
