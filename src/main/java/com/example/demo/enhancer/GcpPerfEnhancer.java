@@ -4,16 +4,11 @@ import ch.qos.logback.classic.spi.ILoggingEvent;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.google.cloud.logging.LogEntry;
 import com.google.cloud.logging.Payload;
 import com.google.cloud.logging.logback.LoggingEventEnhancer;
-import org.slf4j.Marker;
 import org.springframework.http.converter.json.Jackson2ObjectMapperBuilder;
 
-import java.time.Instant;
-import java.time.LocalDateTime;
-import java.time.ZoneId;
 import java.util.Iterator;
 import java.util.Map;
 
@@ -21,16 +16,20 @@ public class GcpPerfEnhancer implements LoggingEventEnhancer {
     @Override
     public void enhanceLogEntry(LogEntry.Builder builder, ILoggingEvent iLoggingEvent) {
         ObjectMapper objectMapper = new Jackson2ObjectMapperBuilder().build();
-        ObjectNode jsonNodes = null;
+
         try {
-            jsonNodes = buildJsonObject(iLoggingEvent, objectMapper);
+            Map<String, Object> mapObject
+                    = objectMapper.readValue(iLoggingEvent.getFormattedMessage(), new TypeReference<>() {
+            });
+
+            Payload.JsonPayload jsonPayload = Payload.JsonPayload.of(mapObject);
+
+            builder.setPayload(jsonPayload);
+
         } catch (JsonProcessingException e) {
             e.printStackTrace();
         }
-        Payload.JsonPayload jsonPayload = Payload.JsonPayload.of(objectMapper.convertValue(jsonNodes, new TypeReference<Map<String, Object>>() {
-        }));
 
-        builder.setPayload(jsonPayload);
 
         Iterator var3 = iLoggingEvent.getMDCPropertyMap().entrySet().iterator();
 
@@ -42,12 +41,4 @@ public class GcpPerfEnhancer implements LoggingEventEnhancer {
         }
     }
 
-    private ObjectNode buildJsonObject(ILoggingEvent event, ObjectMapper mapper) throws JsonProcessingException {
-
-        ObjectNode json = mapper.createObjectNode();
-
-        json.set("msgObject", mapper.readValue(event.getFormattedMessage(), ObjectNode.class));
-
-        return json;
-    }
 }
