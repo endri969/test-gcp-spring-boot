@@ -41,7 +41,7 @@
         <appender-ref ref="CLOUD" />
     </logger>
 
-    <root level="WARN">
+    <root level="INFO">
         <appender-ref ref="CLOUD" />
     </root>
 </configuration>

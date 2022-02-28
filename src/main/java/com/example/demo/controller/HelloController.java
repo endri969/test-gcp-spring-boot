@@ -14,6 +14,7 @@ public class HelloController {
 
 
     private static final Logger logger = LoggerFactory.getLogger(HelloController.class);
+    private static final Logger perfLogger = LoggerFactory.getLogger("performance");
 
     private ObjectMapper mapper = new Jackson2ObjectMapperBuilder().build();
     
@@ -38,6 +39,9 @@ public class HelloController {
         sample.setId("1234567");
 
         logger.info(mapper.writeValueAsString(sample));
+
+        perfLogger.info("From performance logger");
+        perfLogger.info(mapper.writeValueAsString(sample));
 
         return sample;
     }
