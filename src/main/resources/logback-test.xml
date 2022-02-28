@@ -25,6 +25,7 @@
 
         <log>application.perf.log</log> <!-- Optional : default java.log -->
         <enhancer>com.example.demo.enhancer.GcpEnhancer</enhancer>
+        <loggingEventEnhancer>com.example.demo.enhancer.GcpPerfEnhancer</loggingEventEnhancer>
     </appender>
 
     <logger name="performance" level="INFO" additivity="false">
