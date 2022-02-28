@@ -18,6 +18,7 @@
 
         <log>application.module.log</log> <!-- Optional : default java.log -->
         <enhancer>com.example.demo.enhancer.GcpEnhancer</enhancer>
+        <LoggingEventEnhancer>com.example.demo.enhancer.GcpEventEnhancer</LoggingEventEnhancer>
     </appender>
 
     <appender name="CLOUD_PERF" class="com.google.cloud.logging.logback.LoggingAppender">
