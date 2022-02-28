@@ -14,6 +14,7 @@ import org.springframework.http.converter.json.Jackson2ObjectMapperBuilder;
 import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
+import java.util.Iterator;
 import java.util.Map;
 
 public class GcpEventEnhancer implements LoggingEventEnhancer {
@@ -25,6 +26,15 @@ public class GcpEventEnhancer implements LoggingEventEnhancer {
         }));
 
         builder.setPayload(jsonPayload);
+
+        Iterator var3 = iLoggingEvent.getMDCPropertyMap().entrySet().iterator();
+
+        while(var3.hasNext()) {
+            Map.Entry<String, String> entry = (Map.Entry)var3.next();
+            if (null != entry.getKey() && null != entry.getValue()) {
+                builder.addLabel((String)entry.getKey(), (String)entry.getValue());
+            }
+        }
     }
 
     private ObjectNode buildJsonObject(ILoggingEvent event, ObjectMapper mapper) {
@@ -36,6 +46,7 @@ public class GcpEventEnhancer implements LoggingEventEnhancer {
 
         Marker marker = event.getMarker();
         json.put("marker", marker.getName());
+
 
         return json;
     }
