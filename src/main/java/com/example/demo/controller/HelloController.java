@@ -9,6 +9,7 @@ import org.slf4j.Marker;
 import org.slf4j.MarkerFactory;
 import org.springframework.http.converter.json.Jackson2ObjectMapperBuilder;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -39,6 +40,20 @@ public class HelloController {
         Sample sample = new Sample();
 
         sample.setId("1234567");
+
+        logger.info(MarkerFactory.getMarker("JSON_PAYLOAD"),mapper.writeValueAsString(sample));
+
+        perfLogger.info(mapper.writeValueAsString(sample));
+
+        return sample;
+    }
+
+    @GetMapping("/{id}")
+    Sample helloPathVariable(@PathVariable String id) throws JsonProcessingException {
+
+        Sample sample = new Sample();
+
+        sample.setId(id);
 
         logger.info(MarkerFactory.getMarker("JSON_PAYLOAD"),mapper.writeValueAsString(sample));
 
