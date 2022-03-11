@@ -14,7 +14,7 @@ FROM adoptopenjdk/openjdk11:jre-11.0.8_10-alpine
 # Copy the jar to the production image from the builder stage.
 COPY --from=builder /app/target/*.jar /app.jar
 
-ARG springProfiles
-ENV envValue=$springProfiles
+#ARG springProfiles
+ENV envValue="test,test-dev"
 
 CMD ["sh", "-c", "java -Dspring.profiles.active=${envValue} -jar /app.jar"]
