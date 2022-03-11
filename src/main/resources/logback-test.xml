@@ -45,11 +45,11 @@
         <appender-ref ref="CLOUD" />
     </logger>
 
-    <logger name="com.example.demo" level="${log_level}" additivity="false">
+    <logger name="com.example.demo" level="INFO" additivity="false">
         <appender-ref ref="CLOUD" />
     </logger>
 
-    <root level="WARN">
+    <root level="INFO">
         <appender-ref ref="CLOUD" />
     </root>
 </configuration>
