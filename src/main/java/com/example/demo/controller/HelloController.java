@@ -7,6 +7,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.slf4j.Marker;
 import org.slf4j.MarkerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.env.Environment;
 import org.springframework.http.converter.json.Jackson2ObjectMapperBuilder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -18,6 +20,9 @@ public class HelloController {
     private static final Logger perfLogger = LoggerFactory.getLogger("performance");
 
     private ObjectMapper mapper = new Jackson2ObjectMapperBuilder().build();
+
+    @Autowired
+    private Environment environment;
 
     class Sample{
         private String id;
@@ -46,6 +51,11 @@ public class HelloController {
         perfLogger.info(mapper.writeValueAsString(sample));
 
         return sample;
+    }
+
+    @GetMapping("/environment")
+    String[] getProfiles(){
+        return environment.getActiveProfiles();
     }
 
 }
