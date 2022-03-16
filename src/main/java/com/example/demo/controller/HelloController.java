@@ -5,7 +5,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.slf4j.Marker;
 import org.slf4j.MarkerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
@@ -21,8 +20,12 @@ public class HelloController {
 
     private ObjectMapper mapper = new Jackson2ObjectMapperBuilder().build();
 
-    @Autowired
-    private Environment environment;
+    private final Environment environment;
+
+    public HelloController(Environment environment) {
+        logger.info("piu piu piu");
+        this.environment = environment;
+    }
 
     class Sample{
         private String id;
