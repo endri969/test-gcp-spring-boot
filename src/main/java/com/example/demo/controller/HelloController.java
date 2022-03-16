@@ -23,7 +23,6 @@ public class HelloController {
     private final Environment environment;
 
     public HelloController(Environment environment) throws JsonProcessingException {
-        logger.info(MarkerFactory.getMarker("JSON_PAYLOAD"),mapper.writeValueAsString(environment));
         this.environment = environment;
     }
 
