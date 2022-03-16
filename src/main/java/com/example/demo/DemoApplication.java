@@ -1,5 +1,7 @@
 package com.example.demo;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -21,6 +23,7 @@ public class DemoApplication {
 @Component
 @Order(0)
 class AppCdsApplicationListener implements ApplicationListener<ApplicationReadyEvent> {
+    private static final Logger logger = LoggerFactory.getLogger(AppCdsApplicationListener.class);
     private final boolean appcds;
     private final ApplicationContext ctx;
     private final RestTemplate restTemplate = new RestTemplate();
@@ -34,6 +37,7 @@ class AppCdsApplicationListener implements ApplicationListener<ApplicationReadyE
     @Override
     public void onApplicationEvent(ApplicationReadyEvent event) {
         if (appcds) {
+            logger.info("Test from application listener");
             restTemplate.getForEntity("http://localhost:8080/", String.class);
             SpringApplication.exit(ctx, () -> 0);
         }
