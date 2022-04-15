@@ -62,7 +62,7 @@ public class HelloController {
 
     @GetMapping("/password")
     String getPassword(){
-        return secretManagerTemplate.getSecretString("database-password");
+        return this.password;
     }
 
 }
