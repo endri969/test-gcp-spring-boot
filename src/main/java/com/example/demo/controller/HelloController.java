@@ -2,15 +2,14 @@ package com.example.demo.controller;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-
 import com.google.cloud.spring.secretmanager.SecretManagerTemplate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.slf4j.MarkerFactory;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.env.Environment;
 import org.springframework.http.converter.json.Jackson2ObjectMapperBuilder;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -23,6 +22,9 @@ public class HelloController {
     private final Environment environment;
 
     private final SecretManagerTemplate secretManagerTemplate;
+
+    @Value("${sm://database-password}")
+    private String password;
 
     public HelloController(Environment environment, SecretManagerTemplate secretManagerTemplate) throws JsonProcessingException {
         this.environment = environment;
@@ -56,6 +58,11 @@ public class HelloController {
     @GetMapping("/secret")
     String getSecret(){
         return secretManagerTemplate.getSecretString("my-secret");
+    }
+
+    @GetMapping("/password")
+    String getPassword(){
+        return secretManagerTemplate.getSecretString("database-password");
     }
 
 }
