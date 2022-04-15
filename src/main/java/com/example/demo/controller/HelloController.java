@@ -48,16 +48,6 @@ public class HelloController {
         return sample;
     }
 
-    @GetMapping("/{id}")
-    Sample helloPathVariable(@PathVariable String id) throws JsonProcessingException {
-        Sample sample = new Sample();
-        sample.setId(id);
-        logger.info(MarkerFactory.getMarker("JSON_PAYLOAD"),mapper.writeValueAsString(sample));
-        perfLogger.info(mapper.writeValueAsString(sample));
-
-        return sample;
-    }
-
     @GetMapping("/environment")
     String[] getProfiles(){
         return environment.getActiveProfiles();
