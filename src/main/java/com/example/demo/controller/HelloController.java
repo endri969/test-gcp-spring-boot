@@ -3,10 +3,10 @@ package com.example.demo.controller;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import com.google.cloud.spring.secretmanager.SecretManagerTemplate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.slf4j.MarkerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
 import org.springframework.http.converter.json.Jackson2ObjectMapperBuilder;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -22,8 +22,11 @@ public class HelloController {
 
     private final Environment environment;
 
-    public HelloController(Environment environment) throws JsonProcessingException {
+    private final SecretManagerTemplate secretManagerTemplate;
+
+    public HelloController(Environment environment, SecretManagerTemplate secretManagerTemplate) throws JsonProcessingException {
         this.environment = environment;
+        this.secretManagerTemplate = secretManagerTemplate;
     }
 
     class Sample{
@@ -58,6 +61,11 @@ public class HelloController {
     @GetMapping("/environment")
     String[] getProfiles(){
         return environment.getActiveProfiles();
+    }
+
+    @GetMapping("/secret")
+    String getSecret(){
+        return secretManagerTemplate.getSecretString("my-secret");
     }
 
 }
